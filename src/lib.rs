@@ -1,6 +1,16 @@
 //! This crate give you all the combinations of values in a vec
 
+#![cfg_attr(not(feature = "std"), no_std)]
 #[deny(missing_docs)]
+
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+
+#[cfg(not(feature = "std"))]
+use alloc::vec::Vec;
+
+#[cfg(feature = "std")]
+use std::vec::Vec;
 
 /// Combinations selects all the combinations that can be selected.
 ///
@@ -10,8 +20,6 @@
 /// Some info:
 /// * The order of the selected does not matter (if you want all orders of all combinations, you should probably use [permutohedron](https://crates.io/crates/permutohedron) for the orders, and this crate for the combinations)
 /// * Equality of values matter. if 2, 2 is input and you want len 1, the only given solution is 2 once.
-
-
 pub struct Combinations<T>
 where
     T: Ord + Clone,
